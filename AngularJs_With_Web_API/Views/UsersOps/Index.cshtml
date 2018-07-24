@@ -1,0 +1,127 @@
+﻿
+
+
+@Scripts.Render("~/js")
+@Styles.Render("~/css")
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div ng-app="Userapp" ng-controller="UsersController" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="text-align:center">Users Information</h3>
+        </div>
+        <br />
+
+
+        <div class="col-md-12">
+            <strong class="error">{{error}}</strong>
+            <form name="addusers" style="width: 800px; margin: 0px auto;">
+                <div class="form-group row">
+                    <label for="ulname" class="col-sm-2 control-label">Login Name:</label>
+                    <div class="col-sm-10 space">
+                        <input type="text" class="form-control" id="ulname" placeholder="please enter your login name" ng-model="newuser.LoginName" required />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="uname" class="col-sm-2 control-label">User Name:</label>
+                    <div class="col-sm-10 space">
+                        <input class="form-control" id="uname" placeholder="please enter your user name" ng-model="newuser.UserName" required />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="uemail" class="col-sm-2 control-label">User Email:</label>
+                    <div class="col-sm-10 space">
+                        <input type="email" name="uemail" class="form-control" id="uemail" placeholder="please enter your email" ng-model="newuser.UserEmail" required />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="upwd" class="col-sm-2 control-label">Password:</label>
+                    <div class="col-sm-10 space">
+                        <input type="password" class="form-control" id="upwd" placeholder="please enter your password" ng-model="newuser.PasswordHash" required />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="uactive" class="col-sm-2 control-label">Is Active:</label>
+                    <div class="col-sm-10 space">
+                        <input id="uactive" type="checkbox" ng-model="newuser.IsActive">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="uadmin" class="col-sm-2 control-label">Is Admin:</label>
+                    <div class="col-sm-10 space">
+                        <input id="uadmin" type="checkbox" ng-model="newuser.IsAdmin">
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group space">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="New Record" ng-click="add()" ng-show="addShow" ng-disabled="!addusers.$valid" class="btn btn-primary" />
+                        <input type="submit" value="Update Record" ng-click="update()" ng-show="updateShow" ng-disabled="!addusers.$valid" class="btn btn-primary" />
+                        <input type="button" value="Cancel" ng-click="cancel()" class="btn btn-primary" />
+                    </div>
+                </div>
+
+            </form>
+            <div id="spanresponse" style="width: 800px;
+    margin: 0 auto;
+    padding-top: 6px;
+    text-align: right; color:red;" class="col-md-12 default" ng-class="{fade: startFade}"> <span ng-bind="responsemsg"></span></div>
+        </div>
+
+
+
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped" style="width: 835px; margin-left: 150px;">
+                    <tr>
+                        <th>Login Name</th>
+                        <th>User Name</th>
+                        <th>User Email</th>
+                        <th>Is Admin</th>
+                        <th>Is Active</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    <tr ng-repeat="user in users">
+                        <td>
+                            <p>{{ user.LoginName }}</p>
+                        </td>
+                        <td>
+                            <p>{{ user.UserName }}</p>
+                        </td>
+                        <td>
+                            <p>{{ user.UserEmail }}</p>
+                        </td>
+                        <td>
+                            <p>{{ user.IsAdmin }}</p>
+                        </td>
+                        <td>
+                            <p>{{ user.IsActive }}</p>
+                        </td>
+                        <td>
+                            <p>
+                                <a ng-click="edit()" href="javascript:void(0);">Edit</a> |
+                                <a ng-click="delete()" ng-if="user.IsActive === true" href="javascript:void(0);">Delete</a>
+                                <a ng-click="undelete()" ng-if="user.IsActive === false" href="javascript:void(0);">Un Delete</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

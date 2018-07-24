@@ -1,0 +1,26 @@
+﻿@Scripts.Render("~/js")
+@Styles.Render("~/css")
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2></h2>
+
+<div class="container" style="padding-top:40px;">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Weclome, <br /></h3>
+            @if (HttpContext.Current.Session["UserName"] != null)
+            {
+
+                <h3>You are signed with @HttpContext.Current.Session["UserName"]</h3>
+            }
+            else
+            {
+
+                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            }
+        </div>
+    </div>
+</div>
