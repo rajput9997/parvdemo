@@ -44,10 +44,11 @@ function UsersController($scope, $http, $timeout, $window) {
         var Id = this.user.UserId;
         $http.get('/api/Users/' + Id).success(function (data) {
             $scope.newuser = data;
+            $scope.newuser.PasswordHash = "";
             $scope.updateShow = true;
             $scope.addShow = false;
 
-          
+
         }).error(function () {
             $scope.error = "An Error has occured while loading posts!";
         });
@@ -84,12 +85,12 @@ function UsersController($scope, $http, $timeout, $window) {
 
             $scope.responsemsg = data.responsemessage;
             $scope.startFade = true;
-            $window.location.reload();
+            //$window.location.reload();
             $timeout(function () {
                 $scope.startFade = false;
                 $scope.responsemsg = "";
-                
-            }, 4500);
+
+            }, 1000);
 
 
         }).error(function (data) {
@@ -106,13 +107,13 @@ function UsersController($scope, $http, $timeout, $window) {
             $scope.users = data.emplist;
             $scope.responsemsg = data.responsemessage;
             $scope.startFade = true;
-            $window.location.reload();
+            //$window.location.reload();
             $timeout(function () {
                 $scope.startFade = false;
                 $scope.responsemsg = "";
                 //$window.location.reload();
 
-            }, 4500);
+            }, 1000);
         }).error(function (data) {
             $scope.error = "An Error has occured while Saving employee! " + data;
         });

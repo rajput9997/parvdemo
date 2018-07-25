@@ -45,6 +45,7 @@ namespace AngularJs_With_Web_API.Controllers
             using (callcenterEntities db = new callcenterEntities())
             {
                 userinfo employee = db.userinfoes.Find(id);
+               // employee.PasswordHash = "";
                 if (employee == null)
                 {
                     throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -125,7 +126,8 @@ namespace AngularJs_With_Web_API.Controllers
                     string plogin = db.userinfoes.Find(Id).LoginName;
                     db.uspUnDeleteUser(plogin, Output);
                     OutMessage = Convert.ToString(Output.Value);
-                    //emplist = db.userinfoes.ToList();
+                    emplist = db.userinfoes.ToList();
+                    emplist.FirstOrDefault(i => i.UserId == Id).IsActive = true;
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -151,7 +153,8 @@ namespace AngularJs_With_Web_API.Controllers
                     db.uspDeleteUser(plogin, Output);
                     OutMessage = Convert.ToString(Output.Value);
                     // emplist = db.userinfoes.ToList();
-                    //emplist = db.userinfoes.ToList();
+                    emplist = db.userinfoes.ToList();
+                    emplist.FirstOrDefault(i => i.UserId == Id).IsActive = false;
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
