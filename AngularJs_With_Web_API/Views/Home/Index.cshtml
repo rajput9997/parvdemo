@@ -1,6 +1,9 @@
 ﻿@Scripts.Render("~/js")
 @Styles.Render("~/css")
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/scripts/powerbi.js"></script>
+
 @{
     ViewBag.Title = "Index";
 }
@@ -22,5 +25,11 @@
                 @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
             }
         </div>
+
+        <div class="col-md-12" id="embedContainer" style="height:750px;"></div>
+
     </div>
 </div>
+
+
+<script src="~/scripts/powerbiapp.js"></script>
