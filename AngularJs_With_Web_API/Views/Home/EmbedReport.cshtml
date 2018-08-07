@@ -1,6 +1,6 @@
-﻿@model AngularJs_With_Web_API.Models.EmbedConfig
-@Scripts.Render("~/js")
+﻿@Scripts.Render("~/js")
 @Styles.Render("~/css")
+@model AngularJs_With_Web_API.Models.EmbedConfig
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://npmcdn.com/es6-promise@3.2.1"></script>
@@ -10,28 +10,8 @@
     ViewBag.Title = "Index";
 }
 
-<h2></h2>
 
-<div class="container" style="padding-top:40px;">
-    <div class="row">
-        @*<div class="col-md-12">
-            <h3>Weclome, <br /></h3>
-            @if (HttpContext.Current.Session["UserName"] != null)
-            {
-
-                <h3>You are signed with @HttpContext.Current.Session["UserName"]</h3>
-            }
-            else
-            {
-
-                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-            }
-        </div>*@
-
-        <div class="col-md-12" id="embedContainer" style="height:650px;"></div>
-        @*<a id="btnEmbedReport" href="~/Home/EmbedReport">Embed Report</a>*@
-    </div>
-</div>
+<div id="reportContainer"></div>
 
 <script>
     // Read embed application token from Model
@@ -64,12 +44,8 @@
     };
 
     // Get a reference to the embedded report HTML element
-    var reportContainer = $('#embedContainer')[0];
+    var reportContainer = $('#reportContainer')[0];
 
     // Embed the report and display it within the div container.
     var report = powerbi.embed(reportContainer, config);
 </script>
-
-
-
-@*<script src="~/Scripts/powerbiapp.js"></script>*@
