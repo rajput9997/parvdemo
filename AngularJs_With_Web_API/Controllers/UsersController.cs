@@ -31,7 +31,9 @@ namespace AngularJs_With_Web_API.Controllers
                         UserEmail = result.UserEmail,
                         UserName = result.UserName,
                         IsActive = result.IsActive,
-                        IsAdmin = result.IsAdmin
+                        IsAdmin = result.IsAdmin,
+                        CanEdit = result.CanEdit,
+                        CanFilter = result.CanFilter
                     };
                     emplist.Add(employee);
                 }
@@ -45,7 +47,7 @@ namespace AngularJs_With_Web_API.Controllers
             using (callcenterEntities db = new callcenterEntities())
             {
                 userinfo employee = db.userinfoes.Find(id);
-               // employee.PasswordHash = "";
+                // employee.PasswordHash = "";
                 if (employee == null)
                 {
                     throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -66,7 +68,7 @@ namespace AngularJs_With_Web_API.Controllers
                     ObjectParameter Output = new ObjectParameter("responseMessage", typeof(string));
 
                     //string mssage = string.Empty;
-                    var objresults = db.uspAddUser(user.LoginName, Convert.ToString(user.PasswordHash), user.UserName, user.UserEmail, user.IsAdmin, user.IsActive, Output);
+                    var objresults = db.uspAddUser(user.LoginName, Convert.ToString(user.PasswordHash), user.UserName, user.UserEmail, user.IsAdmin, user.IsActive, user.CanEdit, user.CanFilter, Output);
                     var emplist = db.userinfoes.ToList();
 
                     OutMessage = Convert.ToString(Output.Value);
@@ -99,7 +101,7 @@ namespace AngularJs_With_Web_API.Controllers
                 {
                     ObjectParameter Output = new ObjectParameter("responseMessage", typeof(string));
 
-                    var users = db.uspAddUser(user.LoginName, Convert.ToString(user.PasswordHash), user.UserName, user.UserEmail, user.IsAdmin, user.IsActive, Output);
+                    var users = db.uspAddUser(user.LoginName, Convert.ToString(user.PasswordHash), user.UserName, user.UserEmail, user.IsAdmin, user.IsActive, user.CanEdit, user.CanFilter, Output);
                     OutMessage = Convert.ToString(Output.Value);
                     emplist = db.userinfoes.ToList();
                 }

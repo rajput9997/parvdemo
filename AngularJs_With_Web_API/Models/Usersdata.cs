@@ -15,5 +15,8 @@ namespace AngularJs_With_Web_API.Models
         public Nullable<System.Guid> Salt { get; set; }
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
+
+        public bool? CanEdit { get; set; }
+        public bool? CanFilter { get; set; }
     }
 }

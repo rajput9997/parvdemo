@@ -30,6 +30,9 @@ namespace AngularJs_With_Web_API.Models
 
         public string Roles { get; set; }
 
+        public bool? CanEdit { get; set; }
+        public bool? CanFilter { get; set; }
+
         public string ErrorMessage { get; internal set; }
     }
 }

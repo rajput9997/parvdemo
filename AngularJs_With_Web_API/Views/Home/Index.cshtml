@@ -15,18 +15,18 @@
 <div class="container" style="padding-top:40px;">
     <div class="row">
         @*<div class="col-md-12">
-            <h3>Weclome, <br /></h3>
-            @if (HttpContext.Current.Session["UserName"] != null)
-            {
+                <h3>Weclome, <br /></h3>
+                @if (HttpContext.Current.Session["UserName"] != null)
+                {
 
-                <h3>You are signed with @HttpContext.Current.Session["UserName"]</h3>
-            }
-            else
-            {
+                    <h3>You are signed with @HttpContext.Current.Session["UserName"]</h3>
+                }
+                else
+                {
 
-                @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-            }
-        </div>*@
+                    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                }
+            </div>*@
 
         <div class="col-md-12" id="embedContainer" style="height:650px;"></div>
         @*<a id="btnEmbedReport" href="~/Home/EmbedReport">Embed Report</a>*@
@@ -37,6 +37,19 @@
     // Read embed application token from Model
     var accessToken = "@Model.EmbedToken.Token";
 
+    var CanFilter = "@Model.CanFilter";
+    var CanEdit = "@Model.CanEdit";
+
+    if (CanFilter == "False") {
+        CanFilter = false;
+    }
+    else {
+        CanFilter = true;
+    }
+    CanEdit = CanEdit == "False" ? false : true;
+
+    
+
     // Read embed URL from Model
     var embedUrl = "@Html.Raw(Model.EmbedUrl)";
 
@@ -45,6 +58,11 @@
 
     // Get models. models contains enums that can be used.
     var models = window['powerbi-client'].models;
+
+    var viewmode = models.ViewMode.View;
+    if (CanEdit) {
+        viewmode = models.ViewMode.Edit;
+    }
 
     // Embed configuration used to describe the what and how to embed.
     // This object is used when calling powerbi.embed.
@@ -57,8 +75,9 @@
         embedUrl: embedUrl,
         id: embedReportId,
         permissions: models.Permissions.All,
+        viewMode: viewmode,
         settings: {
-            filterPaneEnabled: true,
+            filterPaneEnabled: CanFilter,
             navContentPaneEnabled: true
         }
     };
@@ -68,6 +87,7 @@
 
     // Embed the report and display it within the div container.
     var report = powerbi.embed(reportContainer, config);
+
 </script>
 
 

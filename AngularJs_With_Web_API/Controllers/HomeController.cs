@@ -10,14 +10,15 @@ using Microsoft.PowerBI.Api.V2.Models;
 using Microsoft.Rest;
 using System.Configuration;
 using System.Threading.Tasks;
+using Microsoft.Azure.KeyVault;
 
 namespace AngularJs_With_Web_API.Controllers
 {
     public class HomeController : Controller
     {
 
-        private static readonly string Username = ConfigurationManager.AppSettings["pbiUsername"];
-        private static readonly string Password = ConfigurationManager.AppSettings["pbiPassword"];
+        private static string Username = ConfigurationManager.AppSettings["pbiUsername"];
+        private static string Password = ConfigurationManager.AppSettings["pbiPassword"];
         private static readonly string AuthorityUrl = ConfigurationManager.AppSettings["authorityUrl"];
         private static readonly string ResourceUrl = ConfigurationManager.AppSettings["resourceUrl"];
         private static readonly string ApplicationId = ConfigurationManager.AppSettings["ApplicationId"];
@@ -25,14 +26,39 @@ namespace AngularJs_With_Web_API.Controllers
         private static readonly string WorkspaceId = ConfigurationManager.AppSettings["workspaceId"];
         private static readonly string ReportId = ConfigurationManager.AppSettings["reportId"];
 
+        const string CLIENTID = "2a21b39e-8299-4a44-9a04-f99adc58bbbf";              // move this to app.config
+        const string CLIENTSECRET = "y4my5SIkFw0ttzYvr6ngeSpKlTmInj0GzZsGmJgpH8I=";      // move this to app.config
+        const string SECRETUsername = "https://powerappkeycred.vault.azure.net/secrets/ReportUserName";  // move this to app.config
+        const string SECRETPassword = "https://powerappkeycred.vault.azure.net/secrets/ReportPassword";  // move this to app.config
+
         //
         // GET: /Home/
         [AuthorizationFilter]
         public async Task<ActionResult> Index()
         {
+           /* KeyVaultClient kvc = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(GetToken));
+            var secret = kvc.GetSecretAsync(SECRETUsername);
+            Username = secret.Result.Value;
+
+            var secretpwd = kvc.GetSecretAsync(SECRETPassword);
+            Password = secretpwd.Result.Value; */
+
             // var result = new EmbedConfig();
             var result = await EmbedReport(string.Empty, string.Empty);
             return View(result);
+        }
+
+        // thanks to_ https://docs.microsoft.com/en-us/azure/key-vault/key-vault-use-from-web-application
+        public static async Task<string> GetToken(string authority, string resource, string scope)
+        {
+            var authContext = new AuthenticationContext(authority);
+            ClientCredential clientCred = new ClientCredential(CLIENTID, CLIENTSECRET);
+            AuthenticationResult result = await authContext.AcquireTokenAsync(resource, clientCred);
+
+            if (result == null)
+                throw new InvalidOperationException("Failed to obtain the JWT token");
+
+            return result.AccessToken;
         }
 
         public async Task<EmbedConfig> EmbedReport(string username, string roles)
@@ -128,6 +154,17 @@ namespace AngularJs_With_Web_API.Controllers
                         result.ErrorMessage = "Failed to generate embed token.";
                         // return View(result);
                         return result;
+                    }
+
+                    if (Session["UserID"] != null)
+                    {
+                        using (callcenterEntities db = new callcenterEntities())
+                        {
+                            int userid = Convert.ToInt32(Session["UserID"]);
+                            var validuser = db.userinfoes.FirstOrDefault(i => i.UserId == userid);
+                            result.CanEdit = validuser.CanEdit;
+                            result.CanFilter = validuser.CanFilter;
+                        }
                     }
 
                     // Generate Embed Configuration.
