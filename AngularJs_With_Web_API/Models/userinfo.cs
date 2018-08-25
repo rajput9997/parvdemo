@@ -24,5 +24,6 @@ namespace AngularJs_With_Web_API.Models
         public bool IsAdmin { get; set; }
         public Nullable<bool> CanEdit { get; set; }
         public Nullable<bool> CanFilter { get; set; }
+        public Nullable<bool> CanNavigate { get; set; }
     }
 }

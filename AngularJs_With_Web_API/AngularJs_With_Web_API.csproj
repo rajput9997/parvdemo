@@ -328,6 +328,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\powerbi.js.map" />
     <Content Include="Views\Home\EmbedReport.cshtml" />
+    <None Include="Properties\PublishProfiles\parvpowerbi - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\parvpowerbi - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

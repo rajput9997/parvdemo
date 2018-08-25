@@ -33,7 +33,8 @@ namespace AngularJs_With_Web_API.Controllers
                         IsActive = result.IsActive,
                         IsAdmin = result.IsAdmin,
                         CanEdit = result.CanEdit,
-                        CanFilter = result.CanFilter
+                        CanFilter = result.CanFilter,
+                        CanNavigate = result.CanNavigate
                     };
                     emplist.Add(employee);
                 }
@@ -68,7 +69,7 @@ namespace AngularJs_With_Web_API.Controllers
                     ObjectParameter Output = new ObjectParameter("responseMessage", typeof(string));
 
                     //string mssage = string.Empty;
-                    var objresults = db.uspAddUser(user.LoginName, Convert.ToString(user.PasswordHash), user.UserName, user.UserEmail, user.IsAdmin, user.IsActive, user.CanEdit, user.CanFilter, Output);
+                    var objresults = db.uspAddUser(user.LoginName, Convert.ToString(user.PasswordHash), user.UserName, user.UserEmail, user.IsAdmin, user.IsActive, user.CanEdit, user.CanFilter, user.CanNavigate, Output);
                     var emplist = db.userinfoes.ToList();
 
                     OutMessage = Convert.ToString(Output.Value);
@@ -101,7 +102,7 @@ namespace AngularJs_With_Web_API.Controllers
                 {
                     ObjectParameter Output = new ObjectParameter("responseMessage", typeof(string));
 
-                    var users = db.uspAddUser(user.LoginName, Convert.ToString(user.PasswordHash), user.UserName, user.UserEmail, user.IsAdmin, user.IsActive, user.CanEdit, user.CanFilter, Output);
+                    var users = db.uspAddUser(user.LoginName, Convert.ToString(user.PasswordHash), user.UserName, user.UserEmail, user.IsAdmin, user.IsActive, user.CanEdit, user.CanFilter, user.CanNavigate, Output);
                     OutMessage = Convert.ToString(Output.Value);
                     emplist = db.userinfoes.ToList();
                 }

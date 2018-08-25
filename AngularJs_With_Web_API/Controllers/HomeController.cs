@@ -44,7 +44,7 @@ namespace AngularJs_With_Web_API.Controllers
             Password = secretpwd.Result.Value; */
 
             // var result = new EmbedConfig();
-            var result = await EmbedReport(string.Empty, string.Empty);
+            var result = await EmbedReport(Convert.ToString(Session["UserEmail"]), "User Campaign Role");
             return View(result);
         }
 
@@ -164,6 +164,7 @@ namespace AngularJs_With_Web_API.Controllers
                             var validuser = db.userinfoes.FirstOrDefault(i => i.UserId == userid);
                             result.CanEdit = validuser.CanEdit;
                             result.CanFilter = validuser.CanFilter;
+                            result.CanNavigate = validuser.CanNavigate;
                         }
                     }
 

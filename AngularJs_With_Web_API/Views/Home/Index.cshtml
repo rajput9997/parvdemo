@@ -39,6 +39,7 @@
 
     var CanFilter = "@Model.CanFilter";
     var CanEdit = "@Model.CanEdit";
+    var CanNavigate = "@Model.CanNavigate"
 
     if (CanFilter == "False") {
         CanFilter = false;
@@ -47,6 +48,7 @@
         CanFilter = true;
     }
     CanEdit = CanEdit == "False" ? false : true;
+    CanNavigate = CanNavigate == "False" ? false : true;
 
     
 
@@ -78,7 +80,7 @@
         viewMode: viewmode,
         settings: {
             filterPaneEnabled: CanFilter,
-            navContentPaneEnabled: true
+            navContentPaneEnabled: CanNavigate
         }
     };
 

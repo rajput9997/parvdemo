@@ -8,8 +8,9 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello " + HttpContext.Current.Session["UserName"] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <li class="adminUsername" style="padding-top:15px; color:white !important">
+                Hello @HttpContext.Current.Session["UserName"]!
+                @*@Html.ActionLink("Hello " + HttpContext.Current.Session["UserName"] + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>

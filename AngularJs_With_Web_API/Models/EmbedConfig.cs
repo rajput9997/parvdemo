@@ -33,6 +33,8 @@ namespace AngularJs_With_Web_API.Models
         public bool? CanEdit { get; set; }
         public bool? CanFilter { get; set; }
 
+        public bool? CanNavigate { get; set; }
+
         public string ErrorMessage { get; internal set; }
     }
 }

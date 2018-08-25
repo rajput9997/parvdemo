@@ -97,6 +97,7 @@ namespace AngularJs_With_Web_API.Controllers
                     Session["UserID"] = validuser.UserId;
                     Session["LoginName"] = validuser.LoginName;
                     Session["UserName"] = validuser.UserName;
+                    Session["UserEmail"] = validuser.UserEmail;
                     if (validuser.IsAdmin)
                         Session["IsAdmin"] = true;
                     else

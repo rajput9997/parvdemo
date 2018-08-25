@@ -19,6 +19,7 @@
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
           <Property Name="CanEdit" Type="bit" />
           <Property Name="CanFilter" Type="bit" />
+          <Property Name="CanNavigate" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'callcenter.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -47,6 +48,7 @@ warning 6002: The table/view 'callcenter.sys.database_firewall_rules' does not h
           <Parameter Name="pIsActive" Type="bit" Mode="In" />
           <Parameter Name="pCanEdit" Type="bit" Mode="In" />
           <Parameter Name="pCanFilter" Type="bit" Mode="In" />
+          <Parameter Name="pCanNavigate" Type="bit" Mode="In" />
           <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
         </Function>
         <Function Name="uspDeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="pbie">
@@ -97,6 +99,7 @@ FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery
             <Parameter Name="pIsActive" Mode="In" Type="Boolean" />
             <Parameter Name="pCanEdit" Mode="In" Type="Boolean" />
             <Parameter Name="pCanFilter" Mode="In" Type="Boolean" />
+            <Parameter Name="pCanNavigate" Mode="In" Type="Boolean" />
             <Parameter Name="responseMessage" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="uspDeleteUser">
@@ -153,6 +156,7 @@ FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <Property Name="CanEdit" Type="Boolean" />
           <Property Name="CanFilter" Type="Boolean" />
+          <Property Name="CanNavigate" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -181,6 +185,7 @@ FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery
           <EntitySetMapping Name="userinfoes">
             <EntityTypeMapping TypeName="callcenterModel.userinfo">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="CanNavigate" ColumnName="CanNavigate" />
                 <ScalarProperty Name="CanFilter" ColumnName="CanFilter" />
                 <ScalarProperty Name="CanEdit" ColumnName="CanEdit" />
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />

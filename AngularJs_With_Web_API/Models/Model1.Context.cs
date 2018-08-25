@@ -31,7 +31,7 @@ namespace AngularJs_With_Web_API.Models
         public DbSet<database_firewall_rules> database_firewall_rules { get; set; }
         public DbSet<userinfo> userinfoes { get; set; }
     
-        public virtual int uspAddUser(string pLogin, string pPassword, string pName, string pEmail, Nullable<bool> pIsAdmin, Nullable<bool> pIsActive, Nullable<bool> pCanEdit, Nullable<bool> pCanFilter, ObjectParameter responseMessage)
+        public virtual int uspAddUser(string pLogin, string pPassword, string pName, string pEmail, Nullable<bool> pIsAdmin, Nullable<bool> pIsActive, Nullable<bool> pCanEdit, Nullable<bool> pCanFilter, Nullable<bool> pCanNavigate, ObjectParameter responseMessage)
         {
             var pLoginParameter = pLogin != null ?
                 new ObjectParameter("pLogin", pLogin) :
@@ -65,7 +65,11 @@ namespace AngularJs_With_Web_API.Models
                 new ObjectParameter("pCanFilter", pCanFilter) :
                 new ObjectParameter("pCanFilter", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspAddUser", pLoginParameter, pPasswordParameter, pNameParameter, pEmailParameter, pIsAdminParameter, pIsActiveParameter, pCanEditParameter, pCanFilterParameter, responseMessage);
+            var pCanNavigateParameter = pCanNavigate.HasValue ?
+                new ObjectParameter("pCanNavigate", pCanNavigate) :
+                new ObjectParameter("pCanNavigate", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspAddUser", pLoginParameter, pPasswordParameter, pNameParameter, pEmailParameter, pIsAdminParameter, pIsActiveParameter, pCanEditParameter, pCanFilterParameter, pCanNavigateParameter, responseMessage);
         }
     
         public virtual int uspDeleteUser(string pLogin, ObjectParameter responseMessage)
