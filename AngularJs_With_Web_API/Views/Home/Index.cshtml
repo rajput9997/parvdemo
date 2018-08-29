@@ -50,7 +50,7 @@
     CanEdit = CanEdit == "False" ? false : true;
     CanNavigate = CanNavigate == "False" ? false : true;
 
-    
+
 
     // Read embed URL from Model
     var embedUrl = "@Html.Raw(Model.EmbedUrl)";
@@ -80,7 +80,11 @@
         viewMode: viewmode,
         settings: {
             filterPaneEnabled: CanFilter,
-            navContentPaneEnabled: CanNavigate
+            navContentPaneEnabled: CanNavigate,
+            layoutType: models.LayoutType.Custom,
+            customLayout: {
+                displayOption: models.DisplayOption.FitToPage
+            }
         }
     };
 

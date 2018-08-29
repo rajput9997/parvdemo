@@ -39,8 +39,13 @@
         permissions: models.Permissions.All,
         settings: {
             filterPaneEnabled: true,
-            navContentPaneEnabled: true
+            navContentPaneEnabled: true,
+            layoutType: models.LayoutType.Custom,
+            customLayout: {
+                displayOption: models.DisplayOption.FitToPage
+            }
         }
+
     };
 
     // Get a reference to the embedded report HTML element
